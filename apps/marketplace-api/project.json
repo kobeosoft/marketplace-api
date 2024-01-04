@@ -1,0 +1,53 @@
+{
+  "name": "marketplace-api",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/marketplace-api/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/marketplace-api",
+        "main": "apps/marketplace-api/src/main.ts",
+        "tsConfig": "apps/marketplace-api/tsconfig.app.json",
+        "assets": ["apps/marketplace-api/src/assets"],
+        "webpackConfig": "apps/marketplace-api/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "marketplace-api:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "marketplace-api:build:development"
+        },
+        "production": {
+          "buildTarget": "marketplace-api:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"]
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/marketplace-api/jest.config.ts"
+      }
+    }
+  },
+  "tags": []
+}
