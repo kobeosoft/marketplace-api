@@ -1,7 +1,7 @@
 {
-  "name": "marketplace-api",
+  "name": "pxm",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/marketplace-api/src",
+  "sourceRoot": "apps/pxm/src",
   "projectType": "application",
   "targets": {
     "build": {
@@ -11,11 +11,10 @@
       "options": {
         "target": "node",
         "compiler": "tsc",
-        "outputPath": "dist/apps/marketplace-api",
-        "main": "apps/marketplace-api/src/main.ts",
-        "tsConfig": "apps/marketplace-api/tsconfig.app.json",
-        "assets": ["apps/marketplace-api/src/assets"],
-        "webpackConfig": "apps/marketplace-api/webpack.config.js"
+        "outputPath": "dist/apps/pxm",
+        "main": "apps/pxm/src/main.ts",
+        "tsConfig": "apps/pxm/tsconfig.app.json",
+        "webpackConfig": "apps/pxm/webpack.config.js"
       },
       "configurations": {
         "development": {},
@@ -26,14 +25,14 @@
       "executor": "@nx/js:node",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "marketplace-api:build"
+        "buildTarget": "pxm:build"
       },
       "configurations": {
         "development": {
-          "buildTarget": "marketplace-api:build:development"
+          "buildTarget": "pxm:build:development"
         },
         "production": {
-          "buildTarget": "marketplace-api:build:production"
+          "buildTarget": "pxm:build:production"
         }
       }
     },
@@ -45,7 +44,7 @@
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/marketplace-api/jest.config.ts"
+        "jestConfig": "apps/pxm/jest.config.ts"
       }
     }
   },
