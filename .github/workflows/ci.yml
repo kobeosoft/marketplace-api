@@ -1,0 +1,26 @@
+name: Build and Push Services
+
+on:
+  push:
+    branches: [ master ]
+    paths:
+      - 'apps/**'
+      - 'libs/**'
+      - 'docker/**'
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        service: [pxm, oms] # Liste de vos services
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Log in to GitHub Container Registry
+        run: echo ${{ secrets.GHCR_PAT }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+
+      - name: Build and push service
+        run: make build_${{ matrix.service }}

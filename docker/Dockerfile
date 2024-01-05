@@ -1,5 +1,5 @@
 # Base image for building the service
-FROM node:14-alpine as builder
+FROM node:21.5.0-alpine as builder
 
 WORKDIR /usr/src/app
 
