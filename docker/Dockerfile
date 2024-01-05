@@ -19,7 +19,7 @@ ARG NX_SERVICE
 RUN npx nx build ${NX_SERVICE} --prod
 
 # Étape de production pour créer l'image finale
-FROM node:14-alpine as production
+FROM node:21.5.0-alpine as production
 
 ARG NX_SERVICE
 WORKDIR /usr/src/app

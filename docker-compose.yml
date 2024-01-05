@@ -1,5 +1,11 @@
 version: '3.8'
 services:
+  pxm:
+    image: ghcr.io/kobeosoft/marketplace/api/pxm:latest
+    ports:
+      - "3000:3000" # Remplacez le port 3000 par le port sur lequel votre application écoute
+    secrets:
+      - ghcr-creds
   postgres:
     image: postgres:latest
     environment:
@@ -13,3 +19,7 @@ services:
 
 volumes:
   postgres-data:
+
+secrets:
+  ghcr-creds:
+    external: true
