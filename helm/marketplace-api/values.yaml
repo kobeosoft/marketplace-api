@@ -2,7 +2,7 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-fullnameOverride: marketplace-api  # Définissez la valeur de fullnameOverride ici
+fullnameOverride: ""
 
 replicaCount: 1
 
@@ -18,28 +18,16 @@ serviceAccount:
 # Configuration spécifique pour l'API PXM
 api:
   pxm:
+    name: "pxm"
     enabled: true
     replicaCount: 4
     image:
       repository: ghcr.io/kobeosoft/marketplace/api/pxm
-      pullPolicy: IfNotPresent
+      pullPolicy: Always
       tag: "latest"
     service:
       type: ClusterIP
       port: 3000
-
-istio:
-  ingress:
-    enabled: true
-  gateway:
-    enabled: true
-    name: api-gateway
-  virtualService:
-    enabled: true
-    routes:
-      - name: pxm
-        prefix: /pxm
-        port: 3000
 
 resources:
   limits:
@@ -53,16 +41,16 @@ livenessProbe:
   httpGet:
     path: /health
     port: 3000
-  initialDelaySeconds: 30  # Délai initial avant de commencer les sondes
-  periodSeconds: 10  # Fréquence à laquelle les sondes sont effectuées
+  initialDelaySeconds: 30
+  periodSeconds: 10
 
 
 readinessProbe:
   httpGet:
     path: /ready
     port: 3000
-  initialDelaySeconds: 5  # Délai initial avant de commencer les sondes
-  periodSeconds: 5  # Fréquence à laquelle les sondes sont effectuées
+  initialDelaySeconds: 5
+  periodSeconds: 5
 
 autoscaling:
   enabled: false

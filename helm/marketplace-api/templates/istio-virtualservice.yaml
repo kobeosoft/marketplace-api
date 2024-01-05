@@ -1,20 +1,18 @@
 apiVersion: networking.istio.io/v1alpha3
 kind: VirtualService
 metadata:
-  name: {{ include "marketplace-api.fullname" . }}-virtualservice
+  name: marketplace-api-virtualservice
 spec:
   hosts:
     - "*"
   gateways:
-    - {{ .Values.istio.gateway.name }}
+    - marketplace-api-gateway
   http:
-    {{- range .Values.istio.virtualService.routes }}
     - match:
         - uri:
-            prefix: {{ .prefix }}
+            prefix: /pxm
       route:
         - destination:
-            host: {{ .name }}
+            host: latest-marketplace-api-pxm
             port:
-              number: {{ .port }}
-    {{- end }}
+              number: 3000

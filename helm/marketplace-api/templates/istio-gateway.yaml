@@ -1,8 +1,7 @@
-{{- if .Values.istio.gateway.enabled }}
 apiVersion: networking.istio.io/v1alpha3
 kind: Gateway
 metadata:
-  name: {{ .Values.istio.gateway.name }}
+  name: marketplace-api-gateway
 spec:
   selector:
     istio: ingressgateway
@@ -13,4 +12,3 @@ spec:
         protocol: HTTP
       hosts:
         - "*"
-  {{- end }}

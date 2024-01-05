@@ -5,6 +5,8 @@ kind: Deployment
 metadata:
   name: {{ include "marketplace-api.fullname" $ }}-{{ $apiName }}
   labels:
+    {{- include "marketplace-api.labels" $ | nindent 4 }}
+  annotations:
     date: "{{ now | unixEpoch }}"
 spec:
   replicas: {{ $apiConfig.replicaCount }}

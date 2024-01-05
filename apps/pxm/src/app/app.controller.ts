@@ -10,4 +10,15 @@ export class AppController {
   getData() {
     return this.appService.getData();
   }
+
+  @Get('health')
+  healthCheck() {
+    return 'OK';
+  }
+
+  @Get('ready')
+  readinessCheck() {
+    // Implémentez la logique pour déterminer si l'application est prête
+    return 'OK';
+  }
 }
