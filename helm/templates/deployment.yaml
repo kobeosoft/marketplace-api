@@ -21,7 +21,7 @@ spec:
       {{- end }}
       containers:
         - name: {{ .name }}
-          image: "{{ .image.repository }}:{{ .image.tag }}"
+          image: "{{ .image.repository }}:{{ $.Release.Namespace }}"
           imagePullPolicy: {{ .image.pullPolicy }}
           ports:
             - name: http

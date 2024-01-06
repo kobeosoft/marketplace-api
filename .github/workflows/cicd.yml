@@ -62,4 +62,4 @@ jobs:
 
       - name: Deploy with Helm
         run: |
-          helm upgrade --install latest ./helm -n dev --create-namespace
+          helm upgrade --install ${{ github.sha }} ./helm -n dev --create-namespace

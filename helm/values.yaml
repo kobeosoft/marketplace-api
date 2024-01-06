@@ -15,7 +15,6 @@ services:
     image:
       repository: ghcr.io/kobeosoft/marketplace/api/pxm
       pullPolicy: Always
-      tag: "latest"
     service:
       port: 3000
     route:
