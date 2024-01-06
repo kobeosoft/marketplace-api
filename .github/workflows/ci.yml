@@ -7,6 +7,7 @@ on:
       - 'apps/**'
       - 'libs/**'
       - 'docker/**'
+      - '.github/**'
       - 'helm/**'
 
 jobs:
