@@ -1,16 +1,14 @@
 DOCKER_REGISTRY := ghcr.io
-VERSION := latest
+VERSION ?= latest  # Default version tag
+SERVICES ?= pxm oms  # Default list of services
 
+# Dynamic build and push command for each service
 build_and_push:
-	docker build --build-arg NX_SERVICE=$(SERVICE) -t $(DOCKER_REGISTRY)/kobeosoft/marketplace/api/$(SERVICE):$(VERSION) -f docker/Dockerfile .
-	docker push $(DOCKER_REGISTRY)/kobeosoft/marketplace/api/$(SERVICE):$(VERSION)
+	@for service in $(SERVICES); do \
+		echo "Building and pushing $$service:$(VERSION)"; \
+		docker build --build-arg NX_SERVICE=$$service -t $(DOCKER_REGISTRY)/kobeosoft/marketplace/api/$$service:$(VERSION) -f docker/Dockerfile .; \
+		docker push $(DOCKER_REGISTRY)/kobeosoft/marketplace/api/$$service:$(VERSION); \
+	done
 
-# Commandes pour construire et déployer chaque microservice
-build_pxm:
-	make build_and_push SERVICE=pxm
-
-build_oms:
-	make build_and_push SERVICE=oms
-
-# Commande par défaut pour construire tous les microservices
-all: build_pxm build_oms
+# Default command to build all microservices in the SERVICES list
+all: build_and_push
