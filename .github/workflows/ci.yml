@@ -37,7 +37,7 @@ jobs:
         uses: matootie/dokube@v1.4.0
         with:
           personalAccessToken: ${{ secrets.DIGITALOCEAN_TOKEN }}
-          clusterName: do-fra1-k8s-1-28-2-do-0-fra1-1704513016681
+          clusterName: k8s-1-28-2-do-0-fra1-1704513016681
           expirationTime: "1200"
 
       - name: Create Docker registry secret
