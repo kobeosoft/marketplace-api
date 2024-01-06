@@ -18,6 +18,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Install Dependencies
+        run: npm install
+
       - name: Discover changed apps
         run: |
           echo "apps=$(nx affected:apps --base=origin/master --head=HEAD)" >> $GITHUB_ENV
