@@ -1,0 +1,36 @@
+# Default values for marketplace-api.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+nameOverride: ""
+fullnameOverride: ""
+
+imagePullSecrets:
+  - name: ghcr-creds
+
+
+services:
+  - name: "pxm-api"
+    replicaCount: 1
+    image:
+      repository: ghcr.io/kobeosoft/marketplace/api/pxm
+      pullPolicy: Always
+      tag: "latest"
+    service:
+      port: 3000
+    route:
+        uriPrefix: "/api/pxm"
+        uriRewrite: "/"
+        port: 3000
+
+serviceAccount:
+  create: false
+  automount: true
+  annotations: {}
+  name: ""
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
