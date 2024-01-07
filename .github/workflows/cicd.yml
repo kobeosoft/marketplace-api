@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        service: [pmx]
+        service: [pxm]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
