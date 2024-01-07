@@ -63,5 +63,5 @@ jobs:
 
       - name: Deploy with Helm
         run: |
-          helm uninstall $RELEASE_NAME --n dev --ignore-not-found
+          helm uninstall $RELEASE_NAME -n dev --ignore-not-found
           helm install $RELEASE_NAME ./helm -n dev --create-namespace
