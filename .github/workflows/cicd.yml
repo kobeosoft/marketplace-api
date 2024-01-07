@@ -22,11 +22,14 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+      - name: Set up Docker Image Tag
+        run: echo "DOCKER_IMAGE_TAG=develop-$(echo ${GITHUB_SHA} | cut -c1-7)" >> $GITHUB_ENV
+
       - name: Log in to GitHub Container Registry
         run: echo ${{ secrets.GHCR_PAT }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Build and Push Service
-        run: make build_and_push SERVICE=${{ matrix.service }} VERSION=develop
+        run: make build_and_push SERVICE=${{ matrix.service }} VERSION=${{ env.DOCKER_IMAGE_TAG }}
 
 
   deploy-services:
@@ -59,4 +62,4 @@ jobs:
 
       - name: Deploy with Helm
         run: |
-          helm upgrade --install marketplace-api ./helm -n dev --create-namespace --set global.imageTag=develop
+          helm upgrade --install marketplace-api ./helm -n dev --create-namespace --set global.imageTag=${{ env.DOCKER_IMAGE_TAG }}
