@@ -1,5 +1,4 @@
 name: Build and Push Services
-
 on:
   push:
     branches: [ master ]
@@ -15,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        service: [pxm] # Add more services if needed
+        service: [pxm]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -23,17 +22,15 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Set up Docker Image Tag
-        id: set_tag
-        run: |
-          echo "DOCKER_IMAGE_TAG=develop-$(echo ${GITHUB_SHA} | cut -c1-7)" >> $GITHUB_ENV
-          echo "::set-output name=docker_image_tag::${{ env.DOCKER_IMAGE_TAG }}"
+      - name: Docker Image Tag
+        run: echo "DOCKER_IMAGE_TAG=develop-$(echo ${GITHUB_SHA} | cut -c1-7)" >> $GITHUB_ENV
 
       - name: Log in to GitHub Container Registry
         run: echo ${{ secrets.GHCR_PAT }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Build and Push Service
         run: make build_and_push SERVICE=${{ matrix.service }} VERSION=${{ env.DOCKER_IMAGE_TAG }}
+
 
   deploy-services:
     runs-on: ubuntu-latest
@@ -58,6 +55,9 @@ jobs:
           --docker-password=${{ secrets.GHCR_PAT }} \
           --namespace=dev
 
+      - name: Docker Image Tag
+        run: echo "DOCKER_IMAGE_TAG=develop-$(echo ${GITHUB_SHA} | cut -c1-7)" >> $GITHUB_ENV
+
       - name: Install Helm
         uses: azure/setup-helm@v1
         with:
@@ -65,4 +65,4 @@ jobs:
 
       - name: Deploy with Helm
         run: |
-          helm upgrade --install marketplace-api ./helm -n dev --create-namespace --set global.imageTag=${{ needs.build-and-push.outputs.docker_image_tag }}
+          helm upgrade --install marketplace-api ./helm -n dev --create-namespace --set global.imageTag=${{ env.DOCKER_IMAGE_TAG }}
