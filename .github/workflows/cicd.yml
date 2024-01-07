@@ -50,7 +50,6 @@ jobs:
         with:
           personalAccessToken: ${{ secrets.DIGITALOCEAN_TOKEN }}
           clusterName: k8s-1-28-2-do-0-fra1-1704513016681
-          expirationTime: "1200"
 
       - name: Create Docker registry secret
         run: |
