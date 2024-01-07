@@ -8,7 +8,9 @@ fullnameOverride: ""
 imagePullSecrets:
   - name: ghcr-creds
 
-imageTag: "latest"
+global:
+  imageTag: "latest"
+
 services:
   - name: "pxm-api"
     replicaCount: 1

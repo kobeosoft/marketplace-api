@@ -59,4 +59,4 @@ jobs:
 
       - name: Deploy with Helm
         run: |
-          helm upgrade --install latest ./helm -n dev --create-namespace --set imageTag=${{ github.sha }}
+          helm upgrade --install latest ./helm -n dev --create-namespace --set global.imageTag=${{ github.sha }}

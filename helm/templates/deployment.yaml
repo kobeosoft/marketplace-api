@@ -21,7 +21,8 @@ spec:
       {{- end }}
       containers:
         - name: {{ .name }}
-          image: "{{ .image.repository }}:{{ .imageTag }}"
+          image: "{{ .image.repository }}"
+          tag: {{ .Values.global.imageTag }}
           imagePullPolicy: Always
           ports:
             - name: http
