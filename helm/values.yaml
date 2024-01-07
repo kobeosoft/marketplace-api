@@ -8,13 +8,12 @@ fullnameOverride: ""
 imagePullSecrets:
   - name: ghcr-creds
 
-
+imageTag: "latest"
 services:
   - name: "pxm-api"
     replicaCount: 1
     image:
       repository: ghcr.io/kobeosoft/marketplace/api/pxm
-      pullPolicy: Always
     service:
       port: 3000
     route:

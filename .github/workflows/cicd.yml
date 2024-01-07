@@ -14,7 +14,9 @@ on:
 jobs:
   build-and-push-services:
     runs-on: ubuntu-latest
-
+    strategy:
+      matrix:
+        service: [pmx]
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -22,15 +24,11 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
-      - name: Discover changed apps
-        run: |
-          echo "apps=$(npx nx print-affected --base=master --head=HEAD --type=app --select=projectGraph.nodes)" >> $GITHUB_ENV
-
       - name: Log in to GitHub Container Registry
         run: echo ${{ secrets.GHCR_PAT }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
-      - name: Build and push services
-        run: make all VERSION=$RELEASE_NAME SERVICES="${{ env.apps }}"
+      - name: Build and Push Service
+        run: make build_and_push SERVICE=${{ matrix.service }} VERSION=${{ github.sha }}
 
 
   deploy-services:
@@ -63,5 +61,4 @@ jobs:
 
       - name: Deploy with Helm
         run: |
-          helm uninstall $RELEASE_NAME -n dev --ignore-not-found
-          helm install $RELEASE_NAME ./helm -n dev --create-namespace
+          helm upgrade --install $RELEASE_NAME ./helm -n dev --create-namespace --set imageTag=${{ github.sha }}
