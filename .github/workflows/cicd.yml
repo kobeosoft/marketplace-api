@@ -1,6 +1,4 @@
 name: Build and Push Services
-env:
-  RELEASE_NAME: development
 on:
   push:
     branches: [ master ]
@@ -61,4 +59,4 @@ jobs:
 
       - name: Deploy with Helm
         run: |
-          helm upgrade --install $RELEASE_NAME ./helm -n dev --create-namespace --set imageTag=${{ github.sha }}
+          helm upgrade --install latest ./helm -n dev --create-namespace --set imageTag=${{ github.sha }}
