@@ -26,7 +26,7 @@ jobs:
         run: echo ${{ secrets.GHCR_PAT }} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
       - name: Build and Push Service
-        run: make build_and_push SERVICE=${{ matrix.service }} VERSION=${{ github.sha }}
+        run: make build_and_push SERVICE=${{ matrix.service }} VERSION=develop
 
 
   deploy-services:
@@ -59,4 +59,4 @@ jobs:
 
       - name: Deploy with Helm
         run: |
-          helm upgrade --install marketplace-api ./helm -n dev --create-namespace --set global.imageTag=${{ github.sha }}
+          helm upgrade --install marketplace-api ./helm -n dev --create-namespace --set global.imageTag=develop
