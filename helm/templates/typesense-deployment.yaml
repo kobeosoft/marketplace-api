@@ -27,3 +27,8 @@ spec:
           resources:
             {{- toYaml .Values.typesense.resources | nindent 12 }}
 
+      volumes:
+        - name: typesense-data
+          persistentVolumeClaim:
+            claimName: typesense-pvc
+
