@@ -10,4 +10,4 @@ spec:
       targetPort: 8108
       protocol: TCP
   selector:
-    app: {{ include "chart.fullname" . }}-typesense
+    app: typesense
