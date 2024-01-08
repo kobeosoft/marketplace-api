@@ -25,5 +25,5 @@ spec:
                   name: typesense-api-key
                   key: TYPESENSE_API_KEY
           resources:
-            {{ - toYaml .Values.typesense.resources | nindent 12 }}
+            {{- toYaml .Values.typesense.resources | nindent 12 }}
 
