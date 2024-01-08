@@ -18,6 +18,20 @@ spec:
           image: typesense/typesense:0.25.2
           ports:
             - containerPort: 8108
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 60
+            timeoutSeconds: 5
+            failureThreshold: 6
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 10
+            timeoutSeconds: 3
+            periodSeconds: 5
           env:
             - name: TYPESENSE_API_KEY
               valueFrom:
@@ -26,7 +40,9 @@ spec:
                   key: TYPESENSE_API_KEY
           resources:
             {{- toYaml .Values.typesense.resources | nindent 12 }}
-
+          volumeMounts:
+            - name: typesense-data
+              mountPath: /data
       volumes:
         - name: typesense-data
           persistentVolumeClaim:
