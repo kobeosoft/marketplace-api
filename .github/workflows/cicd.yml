@@ -60,6 +60,12 @@ jobs:
           --docker-password=${{ secrets.GHCR_PAT }} \
           --namespace=dev
 
+      - name: Create Typesense API Key Secret
+        run: |
+          kubectl create secret generic typesense-api-key \
+          --from-literal=TYPESENSE_API_KEY=${{ secrets.TYPESENSE_API_KEY }} \
+          --namespace=dev --dry-run=client -o yaml | kubectl apply -f -
+
       - name: Install Helm
         uses: azure/setup-helm@v1
         with:
@@ -73,6 +79,7 @@ jobs:
       - name: Build Helm chart dependencies
         run: |
           helm dependency build ./helm
+
 
       - name: Deploy with Helm
         run: |

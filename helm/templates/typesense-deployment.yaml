@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "chart.fullname" . }}-typesense
+  namespace: {{ .Release.Namespace }}
+spec:
+  replicas: {{ .Values.typesense.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ include "chart.fullname" . }}-typesense
+  template:
+    metadata:
+      labels:
+        app: {{ include "chart.fullname" . }}-typesense
+    spec:
+      containers:
+        - name: typesense
+          image: typesense/typesense:latest
+          ports:
+            - containerPort: 8108
+          env:
+            - name: TYPESENSE_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: typesense-api-key
+                  key: TYPESENSE_API_KEY
+          resources:
+            {{- toYaml .Values.typesense.resources | nindent 10 }}

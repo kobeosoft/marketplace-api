@@ -27,7 +27,7 @@ redis:
   ## Redis settings
   auth:
     enabled: true
-    password: "your_redis_password"  # Set a secure password
+    password: "admin"
 
   ## Redis master settings
   master:
@@ -68,6 +68,16 @@ redis:
   configmap: |
     maxmemory-policy: "volatile-lru"
     # Add other Redis configurations as needed
+
+typesense:
+  replicaCount: 1
+  resources:
+    requests:
+      memory: "256Mi"
+      cpu: "100m"
+    limits:
+      memory: "512Mi"
+      cpu: "200m"
 
 serviceAccount:
   create: false
