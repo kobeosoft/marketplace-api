@@ -65,6 +65,11 @@ jobs:
         with:
           version: '3.13.3'
 
+      - name: Add Bitnami Helm repository
+        run: |
+          helm repo add bitnami https://charts.bitnami.com/bitnami
+          helm repo update
+
       - name: Deploy with Helm
         run: |
           helm upgrade --install marketplace-api ./helm -n dev --create-namespace --set global.imageTag=${{ needs.build.outputs.docker_image_tag }}

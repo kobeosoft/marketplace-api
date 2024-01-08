@@ -23,6 +23,52 @@ services:
         uriRewrite: "/"
         port: 3000
 
+redis:
+  ## Redis settings
+  auth:
+    enabled: true
+    password: "your_redis_password"  # Set a secure password
+
+  ## Redis master settings
+  master:
+    resources:
+      requests:
+        memory: "256Mi"
+        cpu: "100m"
+      limits:
+        memory: "512Mi"
+        cpu: "200m"
+    persistence:
+      enabled: true
+      path: /data
+      size: "8Gi"  # Adjust based on your needs
+      storageClass: ""  # Leave blank for default, or specify storage class
+
+  ## Redis replica settings
+  replica:
+    replicaCount: 2  # Number of Redis replicas
+    resources:
+      requests:
+        memory: "256Mi"
+        cpu: "100m"
+      limits:
+        memory: "512Mi"
+        cpu: "200m"
+    persistence:
+      enabled: true
+      path: /data
+      size: "8Gi"  # Adjust based on your needs
+      storageClass: ""  # Leave blank for default, or specify storage class
+
+  ## Network policy settings
+  networkPolicy:
+    enabled: false
+
+  ## Additional configuration
+  configmap: |
+    maxmemory-policy: "volatile-lru"
+    # Add other Redis configurations as needed
+
 serviceAccount:
   create: false
   automount: true
