@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "chart.fullname" . }}-typesense
+  name: typesense
   namespace: {{ .Release.Namespace }}
 spec:
   replicas: {{ .Values.typesense.replicaCount }}
   selector:
     matchLabels:
-      app: {{ include "chart.fullname" . }}-typesense
+      app: typesense
   template:
     metadata:
       labels:
-        app: {{ include "chart.fullname" . }}-typesense
+        app: typesense
     spec:
       containers:
         - name: typesense
