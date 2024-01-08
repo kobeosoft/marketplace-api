@@ -73,11 +73,11 @@ typesense:
   replicaCount: 1
   resources:
     requests:
-      memory: "256Mi"
-      cpu: "100m"
+      memory: "1Gi"
+      cpu: "500m"
     limits:
-      memory: "512Mi"
-      cpu: "200m"
+      memory: "2Gi"
+      cpu: "1000m"
 
 serviceAccount:
   create: false
