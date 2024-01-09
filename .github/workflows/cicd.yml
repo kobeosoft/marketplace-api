@@ -41,6 +41,7 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     needs: build
+    environment: dev
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -71,9 +72,10 @@ jobs:
         with:
           version: '3.13.3'
 
-      - name: Add Bitnami Helm repository
+      - name: Add Helm repository
         run: |
           helm repo add bitnami https://charts.bitnami.com/bitnami
+          helm repo add codecentric https://codecentric.github.io/helm-charts
           helm repo update
 
       - name: Build Helm chart dependencies
@@ -83,4 +85,11 @@ jobs:
 
       - name: Deploy with Helm
         run: |
-          helm upgrade --install marketplace-api ./helm -n dev --create-namespace --set global.imageTag=${{ needs.build.outputs.docker_image_tag }}
+          helm upgrade --install marketplace-api ./helm -n dev --create-namespace  \
+          --set global.imageTag=${{ needs.build.outputs.docker_image_tag }} \
+          --set keycloak.persistence.dbHost=${{ env.DB_HOST }} \
+          --set keycloak.persistence.dbName=${{ env.KEYCLOAK_DB_NAME }} \
+          --set keycloak.persistence.dbUser=${{ secrets.DB_USER }} \
+          --set keycloak.persistence.dbPassword=${{ secrets.DB_PASSWORD }} \
+          --set keycloak.auth.adminPassword=${{ secrets.KEYCLOAK_ADMIN_PASSWORD }} \
+          --set keycloak.auth.adminUser=${{ secrets.KEYCLOAK_ADMIN_USER }}

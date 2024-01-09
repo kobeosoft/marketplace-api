@@ -6,6 +6,9 @@ dependencies:
   - name: redis
     version: "18.6.2"
     repository: "https://charts.bitnami.com/bitnami"
+  - name: "18.4.4"
+    version: "<version-keycloak>"  # Spécifiez la version souhaitée
+    repository: "https://codecentric.github.io/helm-charts
 
 # A chart can be either an 'application' or a 'library' chart.
 #

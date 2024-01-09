@@ -79,6 +79,20 @@ typesense:
       memory: "2Gi"
       cpu: "500m"
 
+keycloak:
+  auth:
+    adminUser: ""
+    adminPassword: ""
+  persistence:
+    deployPostgres: false
+    dbVendor: postgres
+    dbName: keycloak
+    dbHost: ""
+    dbPort: 25060
+    dbUser: ""
+    dbPassword: ""
+
+
 serviceAccount:
   create: false
   automount: true
