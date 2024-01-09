@@ -87,9 +87,7 @@ jobs:
         run: |
           helm upgrade --install marketplace-api ./helm -n dev --create-namespace  \
           --set global.imageTag=${{ needs.build.outputs.docker_image_tag }} \
-          --set postgresql.postgresqlUsername=${{ secrets.DB_USER }} \
-          --set postgresql.postgresqlPassword=${{ secrets.DB_PASSWORD }} \
-          --set keycloak.persistence.dbUser=${{ secrets.DB_USER }} \
-          --set keycloak.persistence.dbPassword=${{ secrets.DB_PASSWORD }} \
-          --set keycloak.auth.adminPassword=${{ secrets.KEYCLOAK_ADMIN_PASSWORD }} \
-          --set keycloak.auth.adminUser=${{ secrets.KEYCLOAK_ADMIN_USER }}
+          --set global.postgresql.dbUser=${{ secrets.DB_USER }} \
+          --set global.persistence.dbPassword=${{ secrets.DB_PASSWORD }} \
+          --set global.keycloak.user=${{ secrets.KEYCLOAK_ADMIN_USER  }} \
+          --set global.keycloak.password=${{ secrets.KEYCLOAK_ADMIN_PASSWORD }}

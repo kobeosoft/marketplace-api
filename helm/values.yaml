@@ -14,7 +14,9 @@ global:
     dbUser: ""
     dbPassword: ""
     dbName: "default"
-
+  keycloak :
+    user: ""
+    password: ""
 
 serviceAccount:
   create: false
@@ -125,3 +127,7 @@ keycloak:
       value: "{{ .Values.global.postgresql.dbUser }}"
     - name: DB_PASSWORD
       value: "{{ .Values.global.postgresql.dbPassword }}"
+    - name: KEYCLOAK_USER
+      value: "{{ .Values.global.keycloak.user }}"
+    - name: KEYCLOAK_PASSWORD
+      value: "{{ .Values.global.keycloak.password }}"
