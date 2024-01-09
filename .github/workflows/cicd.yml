@@ -70,7 +70,7 @@ jobs:
       - name: Install Helm
         uses: azure/setup-helm@v1
         with:
-          version: '3.13.3'
+          version: '3.13.2'
 
       - name: Add Helm repository
         run: |
@@ -81,7 +81,6 @@ jobs:
       - name: Build Helm chart dependencies
         run: |
           helm dependency build ./helm
-
 
       - name: Deploy with Helm
         run: |
