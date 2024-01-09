@@ -10,6 +10,23 @@ imagePullSecrets:
 
 global:
   imageTag: "latest"
+  postgresql:
+    dbUser: ""
+    dbPassword: ""
+    dbName: "default"
+
+
+serviceAccount:
+  create: false
+  automount: true
+  annotations: {}
+  name: ""
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
 
 services:
   - name: "pxm-api"
@@ -27,9 +44,9 @@ postgresql:
   enabled: true
   image:
     tag: "latest"  # Ou une version spécifique
-  postgresqlUsername: ""
-  postgresqlPassword: ""
-  postgresqlDatabase: "default"
+  postgresqlUsername: "{{ .Values.global.postgresql.dbUser }}"
+  postgresqlPassword: "{{ .Values.global.postgresql.dbPassword }}"
+  postgresqlDatabase: "{{ .Values.global.postgresql.dbName }}"
   persistence:
     enabled: true
     storageClass: ""
@@ -93,30 +110,18 @@ typesense:
       cpu: "500m"
 
 keycloak:
-  auth:
-    adminUser: ""
-    adminPassword: ""
-
   postgresql:
     enabled: false
-
-  persistence:
-    dbVendor: postgres
-    dbName: default
-    dbHost: "postgresql.{{ .Release.Namespace }}.svc.cluster.local"
-    dbPort: 25060
-    dbUser: ""
-    dbPassword: ""
-
-
-serviceAccount:
-  create: false
-  automount: true
-  annotations: {}
-  name: ""
-
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
+  extraEnv: |
+    - name: DB_VENDOR
+      value: postgres
+    - name: DB_ADDR
+      value: "postgresql.{{ .Release.Namespace }}.svc.cluster.local"
+    - name: DB_PORT
+      value: "5432"
+    - name: DB_DATABASE
+      value: "postgresql.{{ .Release.Namespace }}.svc.cluster.local"
+    - name: DB_USER
+      value: "{{ .Values.global.postgresql.dbUser }}"
+    - name: DB_PASSWORD
+      value: "{{ .Values.global.postgresql.dbPassword }}"
