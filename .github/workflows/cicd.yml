@@ -55,7 +55,7 @@ jobs:
       - name: Create Docker registry secret
         run: |
           kubectl delete secret ghcr-creds --namespace=dev --ignore-not-found
-          kubectl create secret docker-registry ghcr-creds \
+          kubectl create secrext docker-registry ghcr-creds \
           --docker-server=ghcr.io \
           --docker-username=${{ github.actor }} \
           --docker-password=${{ secrets.GHCR_PAT }} \
@@ -70,7 +70,7 @@ jobs:
       - name: Install Helm
         uses: azure/setup-helm@v1
         with:
-          version: '3.13.3'
+          version: '3.14.0'
 
       - name: Add Helm repository
         run: |
@@ -85,7 +85,7 @@ jobs:
 
       - name: Deploy with Helm
         run: |
-          helm upgrade --install marketplace-api ./helm -n dev --create-namespace  \
+          helm upgrade --install marketplace-api ./helm  --create-namespace -n dev --create-namespace  \
           --set global.imageTag=${{ needs.build.outputs.docker_image_tag }} \
           --set global.postgresql.dbUser=${{ secrets.DB_USER }} \
           --set global.persistence.dbPassword=${{ secrets.DB_PASSWORD }} \
