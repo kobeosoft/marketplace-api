@@ -122,7 +122,7 @@ keycloak:
     - name: DB_PORT
       value: "5432"
     - name: DB_DATABASE
-      value: "postgresql.{{ .Release.Namespace }}.svc.cluster.local"
+      value: "{{ .Values.global.postgresql.dbName }}"
     - name: DB_USER
       value: "{{ .Values.global.postgresql.dbUser }}"
     - name: DB_PASSWORD
