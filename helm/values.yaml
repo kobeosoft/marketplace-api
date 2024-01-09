@@ -116,11 +116,11 @@ keycloak:
     enabled: false
   extraEnv: |
     - name: DB_VENDOR
-      value: postgres
+      value: "postgres"
     - name: DB_ADDR
       value: "{{ .Release.Name }}-postgresql.{{ .Release.Namespace }}.svc.cluster.local"
     - name: DB_PORT
-      value: 5432
+      value: "5432"
     - name: DB_DATABASE
       value: "{{ .Values.global.postgresql.dbName }}"
     - name: DB_USER
