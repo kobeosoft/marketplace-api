@@ -85,7 +85,7 @@ jobs:
 
       - name: Deploy with Helm
         run: |
-          helm upgrade --install marketplace-api ./helm  -n dev --create-namespace  \
+          helm upgrade --install marketplace-api ./helm -n dev  \
           --set global.imageTag=${{ needs.build.outputs.docker_image_tag }} \
           --set global.postgresql.dbUser=${{ secrets.DB_USER }} \
           --set global.persistence.dbPassword=${{ secrets.DB_PASSWORD }} \
