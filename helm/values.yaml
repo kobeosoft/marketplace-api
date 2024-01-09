@@ -36,9 +36,6 @@ postgresql:
     accessModes:
       - ReadWriteOnce
     size: "10Gi"
-  initdbScripts:
-    init-db.sql: |
-      {{- .Files.Get "files/sql/init-db.sql" | nindent 6 }}
 
 redis:
   ## Redis settings
@@ -84,7 +81,6 @@ redis:
   ## Additional configuration
   configmap: |
     maxmemory-policy: "volatile-lru"
-    # Add other Redis configurations as needed
 
 typesense:
   replicaCount: 1
@@ -100,10 +96,13 @@ keycloak:
   auth:
     adminUser: ""
     adminPassword: ""
+
+  postgresql:
+    enabled: false
+
   persistence:
-    deployPostgres: false
     dbVendor: postgres
-    dbName: keycloak
+    dbName: default
     dbHost: "postgresql.{{ .Release.Namespace }}.svc.cluster.local"
     dbPort: 25060
     dbUser: ""
