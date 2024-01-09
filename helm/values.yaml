@@ -23,6 +23,23 @@ services:
         uriRewrite: "/"
         port: 3000
 
+postgresql:
+  enabled: true
+  image:
+    tag: "latest"  # Ou une version spécifique
+  postgresqlUsername: ""
+  postgresqlPassword: ""
+  postgresqlDatabase: "default"
+  persistence:
+    enabled: true
+    storageClass: ""
+    accessModes:
+      - ReadWriteOnce
+    size: "10Gi"
+  initdbScripts:
+    init-db.sql: |
+      {{- .Files.Get "files/sql/init-db.sql" | nindent 6 }}
+
 redis:
   ## Redis settings
   auth:
@@ -87,7 +104,7 @@ keycloak:
     deployPostgres: false
     dbVendor: postgres
     dbName: keycloak
-    dbHost: ""
+    dbHost: "postgresql.{{ .Release.Namespace }}.svc.cluster.local"
     dbPort: 25060
     dbUser: ""
     dbPassword: ""
