@@ -38,9 +38,9 @@ services:
     service:
       port: 3000
     route:
-        uriPrefix: "/api/pxm"
-        uriRewrite: "/"
-        port: 3000
+      uriPrefix: "/api/pxm"
+      uriRewrite: "/"
+      port: 3000
 
 postgresql:
   enabled: true
