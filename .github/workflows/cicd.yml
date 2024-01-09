@@ -52,22 +52,6 @@ jobs:
           personalAccessToken: ${{ secrets.DIGITALOCEAN_TOKEN }}
           clusterName: k8s-1-28-2-do-0-fra1-1704513016681
 
-      - name: Install Helm
-        uses: azure/setup-helm@v1
-        with:
-          version: '3.13.3'
-
-      - name: Add Helm repository
-        run: |
-          helm repo add bitnami https://charts.bitnami.com/bitnami
-          helm repo add codecentric https://codecentric.github.io/helm-charts
-          helm repo update
-          helm dependency build ./helm
-
-      - name: Create Namespace if it doesn't exist
-        run: |
-          kubectl create namespace dev --dry-run=client -o yaml | kubectl apply -f -
-
       - name: Create Docker registry secret
         run: |
           kubectl delete secret ghcr-creds --namespace=dev --ignore-not-found
@@ -83,11 +67,27 @@ jobs:
           --from-literal=TYPESENSE_API_KEY=${{ secrets.TYPESENSE_API_KEY }} \
           --namespace=dev --dry-run=client -o yaml | kubectl apply -f -
 
+      - name: Install Helm
+        uses: azure/setup-helm@v1
+        with:
+          version: '3.13.3'
+
+      - name: Add Helm repository
+        run: |
+          helm repo add bitnami https://charts.bitnami.com/bitnami
+          helm repo add codecentric https://codecentric.github.io/helm-charts
+          helm repo update
+
+      - name: Build Helm chart dependencies
+        run: |
+          helm dependency build ./helm
+
+
       - name: Deploy with Helm
         run: |
-          helm upgrade --install marketplace-api ./helm -n dev  \
+          helm upgrade --install marketplace-api ./helm -n dev --create-namespace  \
           --set global.imageTag=${{ needs.build.outputs.docker_image_tag }} \
           --set global.postgresql.dbUser=${{ secrets.DB_USER }} \
           --set global.persistence.dbPassword=${{ secrets.DB_PASSWORD }} \
           --set global.keycloak.user=${{ secrets.KEYCLOAK_ADMIN_USER  }} \
-          --set global.keycloak.password=${{ secrets.KEYCLOAK_ADMIN_PASSWORD }}
+          --set global.keycloak.password=${{ secrets.KEYCLOAK_ADMIN_PASSWORD }} \
