@@ -50,7 +50,7 @@ jobs:
         uses: matootie/dokube@v1.4.0
         with:
           personalAccessToken: ${{ secrets.DIGITALOCEAN_TOKEN }}
-          clusterName: ${{ env.CLUSTER_NAME }}
+          clusterName: ${{ secrets.CLUSTER_NAME }}
 
       - name: Create Docker registry secret
         run: |
