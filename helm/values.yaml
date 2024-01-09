@@ -111,23 +111,3 @@ typesense:
       memory: "2Gi"
       cpu: "500m"
 
-keycloak:
-  postgresql:
-    enabled: false
-  extraEnv: |
-    - name: DB_VENDOR
-      value: postgres
-    - name: DB_ADDR
-      value: "postgresql.{{ .Release.Namespace }}.svc.cluster.local"
-    - name: DB_PORT
-      value: "5432"
-    - name: DB_DATABASE
-      value: "postgresql.{{ .Release.Namespace }}.svc.cluster.local"
-    - name: DB_USER
-      value: "{{ .Values.global.postgresql.dbUser }}"
-    - name: DB_PASSWORD
-      value: "{{ .Values.global.postgresql.dbPassword }}"
-    - name: KEYCLOAK_USER
-      value: "{{ .Values.global.keycloak.user }}"
-    - name: KEYCLOAK_PASSWORD
-      value: "{{ .Values.global.keycloak.password }}"
