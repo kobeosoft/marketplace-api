@@ -37,17 +37,23 @@ services:
 
 postgresql:
   enabled: true
-  image:
-    tag: "latest"  # Ou une version spécifique
-  postgresqlUsername: ""
-  postgresqlPassword: ""
-  postgresqlDatabase: default
-  persistence:
-    enabled: true
-    storageClass: ""
-    accessModes:
-      - ReadWriteOnce
-    size: "10Gi"
+  auth:
+    username: ""
+    password: ""
+    database: default
+  primary:
+    resources:
+      requests:
+        memory: "256Mi"
+        cpu: "100m"
+      limits:
+        memory: "512Mi"
+        cpu: "200m"
+    persistence:
+      enabled: true
+      path: /data
+      size: "8Gi"
+      storageClass: ""
 
 redis:
   ## Redis settings
