@@ -120,3 +120,6 @@ keycloak:
     user: "{{ .Values.global.postgresql.dbUser }}"
     password: "{{ .Values.global.postgresql.dbPassword }}"
     database: "{{ .Values.global.postgresql.dbName }}"
+  auth:
+    adminUser: "{{ .Values.global.keycloak.user }}"
+    adminPassword: "{{ .Values.global.keycloak.password }}"
