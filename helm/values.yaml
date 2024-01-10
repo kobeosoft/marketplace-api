@@ -10,13 +10,6 @@ imagePullSecrets:
 
 global:
   imageTag: "latest"
-  postgresql:
-    dbUser: ""
-    dbPassword: ""
-    dbName: "default"
-  keycloak :
-    user: ""
-    password: ""
 
 serviceAccount:
   create: false
@@ -46,9 +39,9 @@ postgresql:
   enabled: true
   image:
     tag: "latest"  # Ou une version spécifique
-  postgresqlUsername: "{{ .Values.global.postgresql.dbUser }}"
-  postgresqlPassword: "{{ .Values.global.postgresql.dbPassword }}"
-  postgresqlDatabase: "{{ .Values.global.postgresql.dbName }}"
+  postgresqlUsername: ""
+  postgresqlPassword: ""
+  postgresqlDatabase: default
   persistence:
     enabled: true
     storageClass: ""
@@ -117,9 +110,9 @@ keycloak:
   externalDatabase:
     host: marketplace-api-postgresql
     port: 5432
-    user: "{{ .Values.global.postgresql.dbUser }}"
-    password: "{{ .Values.global.postgresql.dbPassword }}"
-    database: "{{ .Values.global.postgresql.dbName }}"
+    user:  ""
+    password: ""
+    database: default
   auth:
-    adminUser: "{{ .Values.global.keycloak.user }}"
-    adminPassword: "{{ .Values.global.keycloak.password }}"
+    adminUser: ""
+    adminPassword: ""
