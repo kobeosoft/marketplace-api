@@ -75,7 +75,6 @@ jobs:
       - name: Add Helm repository
         run: |
           helm repo add bitnami https://charts.bitnami.com/bitnami
-          helm repo add codecentric https://codecentric.github.io/helm-charts
           helm repo update
 
       - name: Build Helm chart dependencies

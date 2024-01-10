@@ -114,20 +114,9 @@ typesense:
 keycloak:
   postgresql:
     enabled: false
-  extraEnv: |
-    - name: DB_VENDOR
-      value: "postgres"
-    - name: DB_ADDR
-      value: "{{ .Release.Name }}-postgresql.{{ .Release.Namespace }}.svc.cluster.local"
-    - name: DB_PORT
-      value: "5432"
-    - name: DB_DATABASE
-      value: "{{ .Values.global.postgresql.dbName }}"
-    - name: DB_USER
-      value: "{{ .Values.global.postgresql.dbUser }}"
-    - name: DB_PASSWORD
-      value: "{{ .Values.global.postgresql.dbPassword }}"
-    - name: KEYCLOAK_USER
-      value: "{{ .Values.global.keycloak.user }}"
-    - name: KEYCLOAK_PASSWORD
-      value: "{{ .Values.global.keycloak.password }}"
+  externalDatabase:
+    host: marketplace-api-postgresql
+    port: 5432
+    user: "{{ .Values.global.postgresql.dbUser }}"
+    password: "{{ .Values.global.postgresql.dbPassword }}"
+    database: "{{ .Values.global.postgresql.dbName }}"
