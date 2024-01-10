@@ -1,4 +1,4 @@
-# Default values for marketplace-api.
+# Default values for apicommerce.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
@@ -24,7 +24,7 @@ autoscaling:
   targetCPUUtilizationPercentage: 80
 
 services:
-  - name: "pxm-api"
+  - name: "pxm"
     replicaCount: 1
     image:
       repository: ghcr.io/kobeosoft/marketplace/api/pxm
@@ -114,7 +114,7 @@ keycloak:
   postgresql:
     enabled: false
   externalDatabase:
-    host: marketplace-api-postgresql
+    host: apicommerce-postgresql
     port: 5432
     user:  ""
     password: ""

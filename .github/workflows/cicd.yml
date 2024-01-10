@@ -83,7 +83,7 @@ jobs:
 
       - name: Deploy with Helm
         run: |
-          helm upgrade --install marketplace-api ./helm -n dev --debug \
+          helm upgrade --install apicommerce ./helm -n dev --debug \
           --set global.imageTag=${{ needs.build.outputs.docker_image_tag }} \
           --set postgresql.auth.username=${{ secrets.DB_USER }} \
           --set postgresql.auth.password="${{ secrets.DB_PASSWORD }}" \

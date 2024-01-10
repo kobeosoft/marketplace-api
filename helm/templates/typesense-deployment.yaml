@@ -1,20 +1,20 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: typesense
+  name: {{ $.Release.Name }}-typesense
   namespace: {{ .Release.Namespace }}
 spec:
   replicas: {{ .Values.typesense.replicaCount }}
   selector:
     matchLabels:
-      app: typesense
+      app: {{ $.Release.Name }}-typesense
   template:
     metadata:
       labels:
-        app: typesense
+        app: "{{ $.Release.Name }}-typesense"
     spec:
       containers:
-        - name: typesense
+        - name: {{ $.Release.Name }}-typesense
           image: typesense/typesense:0.25.2
           ports:
             - containerPort: 8108
@@ -43,10 +43,10 @@ spec:
           resources:
             {{- toYaml .Values.typesense.resources | nindent 12 }}
           volumeMounts:
-            - name: typesense-data
+            - name: {{ $.Release.Name }}-typesense-data
               mountPath: /data
       volumes:
-        - name: typesense-data
+        - name: {{ $.Release.Name }}-typesense-data
           persistentVolumeClaim:
-            claimName: typesense-pvc
+            claimName: {{ $.Release.Name }}-typesense-pvc
 

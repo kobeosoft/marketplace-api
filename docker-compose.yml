@@ -3,7 +3,7 @@ services:
   postgres:
     image: postgres:latest
     environment:
-      POSTGRES_DB: marketplace-api
+      POSTGRES_DB: apicommerce
       POSTGRES_USER: api
       POSTGRES_PASSWORD: admin
     ports:
