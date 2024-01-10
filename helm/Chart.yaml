@@ -8,10 +8,10 @@ dependencies:
     repository: "https://charts.bitnami.com/bitnami"
   - name: keycloak
     version: "23.0.4"
-    repository: "https://charts.bitnami.com/keycloak"
+    repository: "https://charts.bitnami.com/bitnami"
   - name: postgresql
     version: "13.2.28"
-    repository: "https://charts.bitnami.com/postgresql"
+    repository: "https://charts.bitnami.com/bitnami"
 # A chart can be either an 'application' or a 'library' chart.
 #
 # Application charts are a collection of templates that can be packaged into versioned archives
